@@ -404,14 +404,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const storedPlan = (localStorage.getItem('selectedPlan') || "").toLowerCase();
     
     if (storedPlan.includes("max") || storedPlan.includes("14500")) {
-        displayPlan = "Euro-Max ₦14,500";
+        displayPlan = "Euro Max"; // Cleaned name for payment.html
         amountToPay = 14500;
     } else {
-        displayPlan = "Euro-Elite ₦8,500";
+        displayPlan = "Euro Elite"; // Cleaned name for payment.html
         amountToPay = 8500;
     }
     
-    planDisplay.textContent = displayPlan;
+    planDisplay.textContent = displayPlan + (amountToPay === 14500 ? " ₦14,500" : " ₦8,500");
     
     const registrationForm = document.getElementById('registration-form');
     registrationForm.addEventListener('submit', function(e) {
@@ -442,9 +442,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function redirectToPayment() {
-    // Save user data to session storage so payment.html can access it
-    sessionStorage.setItem('pendingUser', JSON.stringify(userData));
-    // Redirect to your custom payment page
+    // Saved exactly as your payment.html expects
+    sessionStorage.setItem('celeste_pending_user', JSON.stringify(userData));
     window.location.href = 'payment.html';
 }
 </script>
