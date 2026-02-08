@@ -37,7 +37,6 @@
         .loader-ring { width: 60px; height: 60px; border: 4px solid rgba(0,255,64,0.1); border-top: 4px solid var(--celeste-green); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Notification Styling */
         .activity-popup { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-180%); background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(15px); border: 1px solid rgba(0, 255, 64, 0.4); border-radius: 16px; padding: 14px 20px; display: flex; align-items: center; gap: 14px; transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 1000; width: 90%; max-width: 380px; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
         .activity-popup.show { transform: translateX(-50%) translateY(0); }
         .activity-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(0, 255, 64, 0.1); display: flex; align-items: center; justify-content: center; color: var(--celeste-green); font-size: 18px; }
@@ -119,7 +118,6 @@
 </div>
 
 <script>
-    // 1. DATA TRACKING
     document.addEventListener('DOMContentLoaded', () => {
         const userData = JSON.parse(sessionStorage.getItem('celeste_pending_user'));
         if (userData) {
@@ -130,7 +128,6 @@
         }
     });
 
-    // 2. COPY FUNCTION
     function copyNum() {
         const n = document.getElementById('acc-num').innerText;
         navigator.clipboard.writeText(n).then(() => {
@@ -138,7 +135,6 @@
         });
     }
 
-    // 3. WHATSAPP REDIRECT
     function confirmPayment() {
         const userData = JSON.parse(sessionStorage.getItem('celeste_pending_user')) || { fullName: 'User', plan: 'Elite', amount: 8500 };
         document.getElementById('overlay').style.display = 'flex';
@@ -155,7 +151,6 @@
         }, 2000);
     }
 
-    // 4. TIMER
     let sec = 600;
     setInterval(() => {
         if(sec <= 0) return; sec--;
@@ -164,7 +159,6 @@
         document.getElementById('timer').innerText = `${mins}:${s}`;
     }, 1000);
 
-    // 5. THE 8 ACTIVITY PROFILES
     const activities = [
         { name: "Chinedu A.", loc: "Lagos", plan: "Euro Max", icon: "fa-check-double" },
         { name: "Blessing W.", loc: "Port Harcourt", plan: "Euro Elite", icon: "fa-user-shield" },
@@ -184,6 +178,8 @@
         const text = document.getElementById('activity-text');
         const sub = document.getElementById('activity-sub');
 
+        if(!popup) return;
+
         iconContainer.innerHTML = `<i class="fas ${item.icon}"></i>`;
         text.innerText = `${item.name} from ${item.loc}`;
         sub.innerText = `Successfully activated ${item.plan} • Just now`;
@@ -193,14 +189,11 @@
         setTimeout(() => {
             popup.classList.remove('show');
             curIndex = (curIndex + 1) % activities.length;
-        }, 4000); // Popup stays for 4 seconds
+        }, 4000);
     }
 
-    // Start activity loop
-    setTimeout(showNextActivity, 3000); // First popup after 3 seconds
-    setInterval(showNextActivity, 9000); // Then every 9 seconds
+    setTimeout(showNextActivity, 3000);
+    setInterval(showNextActivity, 9000);
 </script>
-
 </body>
 </html>
-
